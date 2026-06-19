@@ -6,8 +6,7 @@ A modern, visually stunning interactive playground and task management dashboard
 
 ## 🌐 Live Demo & Preview
 
-*   **Interactive Theme:** Premium Vercel-inspired glassmorphic design featuring seamless Light/Dark mode switching.
-*   **Ambient Glow:** Custom backdrop lights and smooth micro-animations for high-fidelity aesthetics.
+[View Live Project →](https://dom-explorer-task-manager-navy.vercel.app/)
 
 ---
 
