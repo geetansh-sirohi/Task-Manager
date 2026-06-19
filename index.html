@@ -1,75 +1,119 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A premium, Vercel-inspired DOM explorer and interactive task management console built with pure HTML, CSS, and Vanilla JavaScript.">
-  <title>DOM Explorer & Task Manager.</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A premium, Vercel-inspired DOM explorer and interactive task management console built with pure HTML, CSS, and Vanilla JavaScript."
+    />
+    <title>DOM Explorer & Task Manager.</title>
 
-  <!-- CSS Styles -->
-  <link rel="stylesheet" href="styles.css">
-  <meta name="color-scheme" content="dark light">
-  
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-</head>
-<body>
-  
-  <!-- Ambient Mesh Gradient Spotlight -->
-  <div class="ambient-glow" aria-hidden="true"></div>
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="color-scheme" content="dark light" />
 
-  <!-- App Wrapper -->
-  <div class="app-wrapper">
-    
-    <!-- Top Header -->
-    <header class="app-header">
-      <div class="header-logo">
-        <h1>Playground<span class="dot">.</span></h1>
-      </div>
-      
-      <button id="theme-toggle-btn" class="theme-toggle" aria-label="Toggle light/dark theme">
-        <i class="bi bi-sun sun-icon" style="font-size: 1.15rem;"></i>
-        <i class="bi bi-moon-stars moon-icon" style="font-size: 1.15rem;"></i>
-      </button>
-    </header>
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
+    <!-- Ambient Mesh Gradient Spotlight -->
+    <div class="ambient-glow" aria-hidden="true"></div>
 
-    <!-- Main Content Container -->
-    <main class="app-main">
-      
-      <!-- SECTION 1: TASK CONSOLE -->
-      <section class="app-section">
-        <div class="section-header">
-          <h2 class="font-mono">Task Console</h2>
-          <p>Create, manage, and filter interactive tasks using native DOM operations.</p>
+    <!-- App Wrapper -->
+    <div class="app-wrapper">
+      <!-- Top Header -->
+      <header class="app-header">
+        <div class="header-logo">
+          <h1>Playground<span class="dot">.</span></h1>
         </div>
 
-        <!-- Task Stats Cards -->
-        <div class="stats-container">
-          <div class="stat-card pending">
-            <div class="stat-info">
-              <span class="stat-num font-mono" id="pending-counter">0</span>
-              <span class="stat-title font-mono">PENDING ENTRIES</span>
-            </div>
-          </div>
-          <div class="stat-card completed">
-            <div class="stat-info">
-              <span class="stat-num font-mono" id="completed-counter">0</span>
-              <span class="stat-title font-mono">COMPLETED ENTRIES</span>
-            </div>
-          </div>
-        </div>
+        <button
+          id="theme-toggle-btn"
+          class="theme-toggle"
+          aria-label="Toggle light/dark theme"
+        >
+          <i class="bi bi-sun sun-icon" style="font-size: 1.15rem"></i>
+          <i class="bi bi-moon-stars moon-icon" style="font-size: 1.15rem"></i>
+        </button>
+      </header>
 
-        <!-- Task Creation Form -->
-        <form id="task-form" class="task-form">
-          <div class="input-group">
-            <label for="task-title" class="font-mono">TASK DESCRIPTION</label>
-            <input type="text" id="task-title" placeholder="What needs to be done?" required autocomplete="off">
+      <!-- Main Content Container -->
+      <main class="app-main">
+        <!-- SECTION 1: TASK CONSOLE -->
+        <section class="app-section">
+          <div class="section-header">
+            <h2 class="font-mono">Task Console</h2>
+            <p>
+              Create, manage, and filter interactive tasks using native DOM
+              operations.
+            </p>
           </div>
-          <div class="input-row">
-            <div class="input-group select-group">
-              <label for="task-category" class="font-mono">CATEGORY</label>
+
+          <!-- Task Stats Cards -->
+          <div class="stats-container">
+            <div class="stat-card pending">
+              <div class="stat-info">
+                <span class="stat-num font-mono" id="pending-counter">0</span>
+                <span class="stat-title font-mono">PENDING ENTRIES</span>
+              </div>
+            </div>
+            <div class="stat-card completed">
+              <div class="stat-info">
+                <span class="stat-num font-mono" id="completed-counter">0</span>
+                <span class="stat-title font-mono">COMPLETED ENTRIES</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task Creation Form -->
+          <form id="task-form" class="task-form">
+            <div class="input-group">
+              <label for="task-title" class="font-mono">TASK DESCRIPTION</label>
+              <input
+                type="text"
+                id="task-title"
+                placeholder="What needs to be done?"
+                required
+                autocomplete="off"
+              />
+            </div>
+            <div class="input-row">
+              <div class="input-group select-group">
+                <label for="task-category" class="font-mono">CATEGORY</label>
+                <div class="select-wrapper">
+                  <select id="task-category">
+                    <option value="Work">Work</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Study">Study</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Urgent">Urgent</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" id="add-task-btn" class="btn btn-primary">
+                Create Entry
+              </button>
+            </div>
+          </form>
+
+          <!-- Search & Filter Controls -->
+          <div class="controls-panel">
+            <div class="search-box">
+              <input
+                type="text"
+                id="task-search"
+                placeholder="Search entries by description..."
+                autocomplete="off"
+              />
+            </div>
+            <div class="filter-actions">
               <div class="select-wrapper">
-                <select id="task-category">
+                <select id="filter-category" class="filter-select">
+                  <option value="all">All Categories</option>
                   <option value="Work">Work</option>
                   <option value="Personal">Personal</option>
                   <option value="Study">Study</option>
@@ -77,306 +121,365 @@
                   <option value="Urgent">Urgent</option>
                 </select>
               </div>
-            </div>
-            <button type="submit" id="add-task-btn" class="btn btn-primary">
-              Create Entry
-            </button>
-          </div>
-        </form>
-
-        <!-- Search & Filter Controls -->
-        <div class="controls-panel">
-          <div class="search-box">
-            <input type="text" id="task-search" placeholder="Search entries by description..." autocomplete="off">
-          </div>
-          <div class="filter-actions">
-            <div class="select-wrapper">
-              <select id="filter-category" class="filter-select">
-                <option value="all">All Categories</option>
-                <option value="Work">Work</option>
-                <option value="Personal">Personal</option>
-                <option value="Study">Study</option>
-                <option value="Shopping">Shopping</option>
-                <option value="Urgent">Urgent</option>
-              </select>
-            </div>
-            <button id="clear-all-btn" class="btn btn-danger font-mono">
-              CLEAR ALL
-            </button>
-          </div>
-        </div>
-
-        <!-- Task List Container -->
-        <div class="task-list-wrapper">
-          <div class="task-list-header">
-            <h3 class="font-mono">ACTIVE ENTRIES</h3>
-          </div>
-          <div id="task-list" class="task-list">
-            <!-- Dynamic Task Cards go here -->
-            <div class="empty-state" id="empty-state">
-              <h4 class="font-mono">NO ACTIVE ENTRIES</h4>
-              <p>Add a task description above to populate your workspace.</p>
+              <button id="clear-all-btn" class="btn btn-danger font-mono">
+                CLEAR ALL
+              </button>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- Divider -->
-      <hr class="section-divider">
-
-      <!-- SECTION 2: DOM PLAYGROUNDS -->
-      <section class="app-section">
-        <div class="section-header">
-          <h2 class="font-mono">DOM Playgrounds</h2>
-          <p>Interactive playgrounds to explore event propagation and the difference between attributes and properties.</p>
-        </div>
-
-        <div class="playground-grid">
-          
-          <!-- PART A: EVENT PROPAGATION -->
-          <div class="playground-card">
-            <div class="card-header">
-              <h3 class="font-mono">Event Propagation (Capturing & Bubbling)</h3>
-              <p>Observe how events travel through the DOM hierarchy. Click the Child button to trigger event dispatching.</p>
+          <!-- Task List Container -->
+          <div class="task-list-wrapper">
+            <div class="task-list-header">
+              <h3 class="font-mono">ACTIVE ENTRIES</h3>
             </div>
-            
-            <div class="propagation-demo-wrapper">
-              <!-- Propagation Control Toggle -->
-              <div class="propagation-controls">
-                <span class="control-label font-mono">FLOW MODE:</span>
-                <div class="radio-group">
-                  <label class="radio-label">
-                    <input type="radio" name="propagation-mode" value="bubble" checked>
-                    <span class="custom-radio"></span>
-                    Bubbling (Child ➔ Grandparent)
-                  </label>
-                  <label class="radio-label">
-                    <input type="radio" name="propagation-mode" value="capture">
-                    <span class="custom-radio"></span>
-                    Capturing (Grandparent ➔ Child)
-                  </label>
-                </div>
+            <div id="task-list" class="task-list">
+              <!-- Dynamic Task Cards go here -->
+              <div class="empty-state" id="empty-state">
+                <h4 class="font-mono">NO ACTIVE ENTRIES</h4>
+                <p>Add a task description above to populate your workspace.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: DOM PLAYGROUNDS -->
+        <section class="app-section">
+          <div class="section-header">
+            <h2 class="font-mono">DOM Playgrounds</h2>
+            <p>
+              Interactive playgrounds to explore event propagation and the
+              difference between attributes and properties.
+            </p>
+          </div>
+
+          <div class="playground-grid">
+            <!-- PART A: EVENT PROPAGATION -->
+            <div class="playground-card">
+              <div class="card-header">
+                <h3 class="font-mono">
+                  Event Propagation (Capturing & Bubbling)
+                </h3>
+                <p>
+                  Observe how events travel through the DOM hierarchy. Click the
+                  Child button to trigger event dispatching.
+                </p>
               </div>
 
-              <!-- Nested DOM Elements -->
-              <div class="prop-box grandparent" id="prop-grandparent" data-name="Grandparent">
-                <span class="box-label font-mono">Grandparent (Div)</span>
-                
-                <div class="prop-box parent" id="prop-parent" data-name="Parent">
-                  <span class="box-label font-mono">Parent (Div)</span>
-                  
-                  <button class="prop-btn child" id="prop-child" data-name="Child">
-                    Child (Button)
+              <div class="propagation-demo-wrapper">
+                <!-- Propagation Control Toggle -->
+                <div class="propagation-controls">
+                  <span class="control-label font-mono">FLOW MODE:</span>
+                  <div class="radio-group">
+                    <label class="radio-label">
+                      <input
+                        type="radio"
+                        name="propagation-mode"
+                        value="bubble"
+                        checked
+                      />
+                      <span class="custom-radio"></span>
+                      Bubbling (Child ➔ Grandparent)
+                    </label>
+                    <label class="radio-label">
+                      <input
+                        type="radio"
+                        name="propagation-mode"
+                        value="capture"
+                      />
+                      <span class="custom-radio"></span>
+                      Capturing (Grandparent ➔ Child)
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Nested DOM Elements -->
+                <div
+                  class="prop-box grandparent"
+                  id="prop-grandparent"
+                  data-name="Grandparent"
+                >
+                  <span class="box-label font-mono">Grandparent (Div)</span>
+
+                  <div
+                    class="prop-box parent"
+                    id="prop-parent"
+                    data-name="Parent"
+                  >
+                    <span class="box-label font-mono">Parent (Div)</span>
+
+                    <button
+                      class="prop-btn child"
+                      id="prop-child"
+                      data-name="Child"
+                    >
+                      Child (Button)
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Virtual Console Log -->
+                <div class="console-box">
+                  <div class="console-header">
+                    <span class="console-title font-mono"
+                      >SIMULATED CONSOLE LOGS</span
+                    >
+                    <button
+                      id="clear-console-btn"
+                      class="console-clear-btn font-mono"
+                    >
+                      CLEAR
+                    </button>
+                  </div>
+                  <div class="console-body font-mono" id="console-logs">
+                    <div class="console-placeholder">
+                      // Console is idle. Trigger an event above.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PART B: ATTRIBUTES VS PROPERTIES -->
+            <div class="playground-card">
+              <div class="card-header">
+                <h3 class="font-mono">Attributes vs. Properties</h3>
+                <p>
+                  Watch how DOM properties change dynamically with user inputs,
+                  while initial HTML attributes remain static.
+                </p>
+              </div>
+
+              <div class="attr-prop-demo-wrapper">
+                <!-- Target Text Input -->
+                <div class="input-demo-group">
+                  <label for="demo-input" class="font-mono"
+                    >INTERACTIVE TARGET INPUT</label
+                  >
+                  <input type="text" id="demo-input" value="Original Value" />
+                </div>
+
+                <!-- Live Comparison Display -->
+                <div class="comparison-display">
+                  <div class="comparison-box">
+                    <div class="comp-title font-mono">
+                      PROPERTY STATE (input.value)
+                    </div>
+                    <div class="comp-value font-mono" id="prop-live-value">
+                      "Original Value"
+                    </div>
+                    <p class="comp-desc">
+                      Represents the <strong>current, live state</strong> of the
+                      input element in memory. Changes instantly as you type.
+                    </p>
+                  </div>
+
+                  <div class="comparison-box">
+                    <div class="comp-title font-mono">
+                      ATTRIBUTE STATE (input.getAttribute('value'))
+                    </div>
+                    <div class="comp-value font-mono" id="attr-live-value">
+                      "Original Value"
+                    </div>
+                    <p class="comp-desc">
+                      Represents the <strong>initial/default state</strong> in
+                      the HTML source code. Remains unchanged unless explicitly
+                      modified via setAttribute.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Interactive Actions -->
+                <div class="demo-actions">
+                  <button id="btn-set-prop" class="btn btn-secondary font-mono">
+                    Set Property (.value = "Updated Prop")
+                  </button>
+                  <button id="btn-set-attr" class="btn btn-secondary font-mono">
+                    Set Attribute (setAttribute('value', "Updated Attr"))
+                  </button>
+                  <button id="btn-reset-demo" class="btn btn-danger font-mono">
+                    RESET VALUES
                   </button>
                 </div>
               </div>
-
-              <!-- Virtual Console Log -->
-              <div class="console-box">
-                <div class="console-header">
-                  <span class="console-title font-mono">SIMULATED CONSOLE LOGS</span>
-                  <button id="clear-console-btn" class="console-clear-btn font-mono">CLEAR</button>
-                </div>
-                <div class="console-body font-mono" id="console-logs">
-                  <div class="console-placeholder">// Console is idle. Trigger an event above.</div>
-                </div>
-              </div>
             </div>
           </div>
+        </section>
 
-          <!-- PART B: ATTRIBUTES VS PROPERTIES -->
-          <div class="playground-card">
-            <div class="card-header">
-              <h3 class="font-mono">Attributes vs. Properties</h3>
-              <p>Watch how DOM properties change dynamically with user inputs, while initial HTML attributes remain static.</p>
-            </div>
+        <!-- SECTION 3: BROWSER PIPELINE -->
+        <section class="app-section">
+          <div class="section-header">
+            <h2 class="font-mono">Browser Rendering Pipeline</h2>
+            <p>
+              A visual breakdown of how browsers convert source code (HTML &
+              CSS) into pixels on the screen. Hover over nodes for explanations.
+            </p>
+          </div>
 
-            <div class="attr-prop-demo-wrapper">
-              <!-- Target Text Input -->
-              <div class="input-demo-group">
-                <label for="demo-input" class="font-mono">INTERACTIVE TARGET INPUT</label>
-                <input type="text" id="demo-input" value="Original Value">
-              </div>
-
-              <!-- Live Comparison Display -->
-              <div class="comparison-display">
-                <div class="comparison-box">
-                  <div class="comp-title font-mono">PROPERTY STATE (input.value)</div>
-                  <div class="comp-value font-mono" id="prop-live-value">"Original Value"</div>
-                  <p class="comp-desc">Represents the <strong>current, live state</strong> of the input element in memory. Changes instantly as you type.</p>
-                </div>
-                
-                <div class="comparison-box">
-                  <div class="comp-title font-mono">ATTRIBUTE STATE (input.getAttribute('value'))</div>
-                  <div class="comp-value font-mono" id="attr-live-value">"Original Value"</div>
-                  <p class="comp-desc">Represents the <strong>initial/default state</strong> in the HTML source code. Remains unchanged unless explicitly modified via setAttribute.</p>
+          <div class="pipeline-flow">
+            <!-- Row 1: HTML Parser to DOM -->
+            <div class="pipeline-row">
+              <div
+                class="pipeline-node source"
+                data-tooltip="The source text document containing tags, text, and structure."
+              >
+                <div class="node-icon font-mono">&lt;/&gt;</div>
+                <div class="node-content">
+                  <div class="node-title font-mono">HTML Source</div>
+                  <div class="node-detail">Raw byte stream</div>
                 </div>
               </div>
 
-              <!-- Interactive Actions -->
-              <div class="demo-actions">
-                <button id="btn-set-prop" class="btn btn-secondary font-mono">
-                  Set Property (.value = "Updated Prop")
-                </button>
-                <button id="btn-set-attr" class="btn btn-secondary font-mono">
-                  Set Attribute (setAttribute('value', "Updated Attr"))
-                </button>
-                <button id="btn-reset-demo" class="btn btn-danger font-mono">
-                  RESET VALUES
-                </button>
+              <div class="pipeline-arrow" aria-hidden="true"></div>
+
+              <div
+                class="pipeline-node process"
+                data-tooltip="Tokenization converts bytes of HTML into distinct tokens (start tags, end tags, attributes, text)."
+              >
+                <div class="node-icon font-mono">T</div>
+                <div class="node-content">
+                  <div class="node-title font-mono">Tokenization</div>
+                  <div class="node-detail">Lexical Analysis</div>
+                </div>
+              </div>
+
+              <div class="pipeline-arrow" aria-hidden="true"></div>
+
+              <div
+                class="pipeline-node process"
+                data-tooltip="Parsing constructs nodes and nesting relationships from the parsed tokens."
+              >
+                <div class="node-icon font-mono">P</div>
+                <div class="node-content">
+                  <div class="node-title font-mono">HTML Parsing</div>
+                  <div class="node-detail">Grammar check & nest</div>
+                </div>
+              </div>
+
+              <div class="pipeline-arrow" aria-hidden="true"></div>
+
+              <div
+                class="pipeline-node result"
+                data-tooltip="DOM (Document Object Model) Tree represents the document as nodes in memory."
+              >
+                <div class="node-icon font-mono">D</div>
+                <div class="node-content">
+                  <div class="node-title font-mono">DOM Tree</div>
+                  <div class="node-detail">Object representation</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Branching / Merging indicators -->
+            <div class="pipeline-divider">
+              <div class="divider-arrow-left"></div>
+              <div class="divider-plus font-mono">+</div>
+              <div class="divider-arrow-right"></div>
+            </div>
+
+            <!-- Row 2: CSS to CSSOM -->
+            <div class="pipeline-row">
+              <div
+                class="pipeline-node source"
+                data-tooltip="The CSS source stylesheet containing selectors and declaration blocks."
+              >
+                <div class="node-icon font-mono">{}</div>
+                <div class="node-content">
+                  <div class="node-title font-mono">CSS Source</div>
+                  <div class="node-detail">Stylesheets & inline styles</div>
+                </div>
+              </div>
+
+              <div class="pipeline-arrow" aria-hidden="true"></div>
+
+              <div
+                class="pipeline-node process"
+                data-tooltip="Parser parses styling rules, computes cascades, and processes specificity."
+              >
+                <div class="node-icon font-mono">C</div>
+                <div class="node-content">
+                  <div class="node-title font-mono">CSS Parsing</div>
+                  <div class="node-detail">Cascade resolution</div>
+                </div>
+              </div>
+
+              <div class="pipeline-arrow" aria-hidden="true"></div>
+
+              <div
+                class="pipeline-node result"
+                data-tooltip="CSSOM (CSS Object Model) Tree represents computed styles for DOM nodes."
+              >
+                <div class="node-icon font-mono">S</div>
+                <div class="node-content">
+                  <div class="node-title font-mono">CSSOM Tree</div>
+                  <div class="node-detail">Style node attachment</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Merging to Render Tree -->
+            <div class="pipeline-divider final">
+              <div class="line-down"></div>
+              <div class="divider-arrow-down"></div>
+            </div>
+
+            <!-- Row 3: Render Tree to Pixels -->
+            <div class="pipeline-row centered">
+              <div
+                class="pipeline-node render-tree"
+                data-tooltip="Render Tree combines DOM nodes and CSSOM styles (excluding non-rendered elements like display:none)."
+              >
+                <div class="node-icon font-mono">RT</div>
+                <div class="node-content">
+                  <div class="node-title font-mono">Render Tree</div>
+                  <div class="node-detail">DOM + CSSOM Merged</div>
+                </div>
+              </div>
+
+              <div class="pipeline-arrow" aria-hidden="true"></div>
+
+              <div
+                class="pipeline-node process"
+                data-tooltip="Layout calculates geometry, sizes, and precise coordinates for each node."
+              >
+                <div class="node-icon font-mono">L</div>
+                <div class="node-content">
+                  <div class="node-title font-mono">Layout</div>
+                  <div class="node-detail">Reflow & positions</div>
+                </div>
+              </div>
+
+              <div class="pipeline-arrow" aria-hidden="true"></div>
+
+              <div
+                class="pipeline-node process"
+                data-tooltip="Paint fills in visual pixels, colors, text, borders, and shadows."
+              >
+                <div class="node-icon font-mono">PT</div>
+                <div class="node-content">
+                  <div class="node-title font-mono">Paint</div>
+                  <div class="node-detail">Rasterization</div>
+                </div>
+              </div>
+
+              <div class="pipeline-arrow" aria-hidden="true"></div>
+
+              <div
+                class="pipeline-node screen"
+                data-tooltip="Composite layers are drawn onto the screen, utilizing GPU hardware acceleration."
+              >
+                <div class="node-icon font-mono">CP</div>
+                <div class="node-content">
+                  <div class="node-title font-mono">Composite</div>
+                  <div class="node-detail">Draw on screen</div>
+                </div>
               </div>
             </div>
           </div>
+        </section>
+      </main>
+    </div>
 
-        </div>
-      </section>
-
-      <!-- Divider -->
-      <hr class="section-divider">
-
-      <!-- SECTION 3: BROWSER PIPELINE -->
-      <section class="app-section">
-        <div class="section-header">
-          <h2 class="font-mono">Browser Rendering Pipeline</h2>
-          <p>A visual breakdown of how browsers convert source code (HTML & CSS) into pixels on the screen. Hover over nodes for explanations.</p>
-        </div>
-
-        <div class="pipeline-flow">
-          
-          <!-- Row 1: HTML Parser to DOM -->
-          <div class="pipeline-row">
-            <div class="pipeline-node source" data-tooltip="The source text document containing tags, text, and structure.">
-              <div class="node-icon font-mono">&lt;/&gt;</div>
-              <div class="node-content">
-                <div class="node-title font-mono">HTML Source</div>
-                <div class="node-detail">Raw byte stream</div>
-              </div>
-            </div>
-            
-            <div class="pipeline-arrow" aria-hidden="true"></div>
-
-            <div class="pipeline-node process" data-tooltip="Tokenization converts bytes of HTML into distinct tokens (start tags, end tags, attributes, text).">
-              <div class="node-icon font-mono">T</div>
-              <div class="node-content">
-                <div class="node-title font-mono">Tokenization</div>
-                <div class="node-detail">Lexical Analysis</div>
-              </div>
-            </div>
-
-            <div class="pipeline-arrow" aria-hidden="true"></div>
-
-            <div class="pipeline-node process" data-tooltip="Parsing constructs nodes and nesting relationships from the parsed tokens.">
-              <div class="node-icon font-mono">P</div>
-              <div class="node-content">
-                <div class="node-title font-mono">HTML Parsing</div>
-                <div class="node-detail">Grammar check & nest</div>
-              </div>
-            </div>
-
-            <div class="pipeline-arrow" aria-hidden="true"></div>
-
-            <div class="pipeline-node result" data-tooltip="DOM (Document Object Model) Tree represents the document as nodes in memory.">
-              <div class="node-icon font-mono">D</div>
-              <div class="node-content">
-                <div class="node-title font-mono">DOM Tree</div>
-                <div class="node-detail">Object representation</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Branching / Merging indicators -->
-          <div class="pipeline-divider">
-            <div class="divider-arrow-left"></div>
-            <div class="divider-plus font-mono">+</div>
-            <div class="divider-arrow-right"></div>
-          </div>
-
-          <!-- Row 2: CSS to CSSOM -->
-          <div class="pipeline-row">
-            <div class="pipeline-node source" data-tooltip="The CSS source stylesheet containing selectors and declaration blocks.">
-              <div class="node-icon font-mono">{}</div>
-              <div class="node-content">
-                <div class="node-title font-mono">CSS Source</div>
-                <div class="node-detail">Stylesheets & inline styles</div>
-              </div>
-            </div>
-
-            <div class="pipeline-arrow" aria-hidden="true"></div>
-
-            <div class="pipeline-node process" data-tooltip="Parser parses styling rules, computes cascades, and processes specificity.">
-              <div class="node-icon font-mono">C</div>
-              <div class="node-content">
-                <div class="node-title font-mono">CSS Parsing</div>
-                <div class="node-detail">Cascade resolution</div>
-              </div>
-            </div>
-
-            <div class="pipeline-arrow" aria-hidden="true"></div>
-
-            <div class="pipeline-node result" data-tooltip="CSSOM (CSS Object Model) Tree represents computed styles for DOM nodes.">
-              <div class="node-icon font-mono">S</div>
-              <div class="node-content">
-                <div class="node-title font-mono">CSSOM Tree</div>
-                <div class="node-detail">Style node attachment</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Merging to Render Tree -->
-          <div class="pipeline-divider final">
-            <div class="line-down"></div>
-            <div class="divider-arrow-down"></div>
-          </div>
-
-          <!-- Row 3: Render Tree to Pixels -->
-          <div class="pipeline-row centered">
-            <div class="pipeline-node render-tree" data-tooltip="Render Tree combines DOM nodes and CSSOM styles (excluding non-rendered elements like display:none).">
-              <div class="node-icon font-mono">RT</div>
-              <div class="node-content">
-                <div class="node-title font-mono">Render Tree</div>
-                <div class="node-detail">DOM + CSSOM Merged</div>
-              </div>
-            </div>
-
-            <div class="pipeline-arrow" aria-hidden="true"></div>
-
-            <div class="pipeline-node process" data-tooltip="Layout calculates geometry, sizes, and precise coordinates for each node.">
-              <div class="node-icon font-mono">L</div>
-              <div class="node-content">
-                <div class="node-title font-mono">Layout</div>
-                <div class="node-detail">Reflow & positions</div>
-              </div>
-            </div>
-
-            <div class="pipeline-arrow" aria-hidden="true"></div>
-
-            <div class="pipeline-node process" data-tooltip="Paint fills in visual pixels, colors, text, borders, and shadows.">
-              <div class="node-icon font-mono">PT</div>
-              <div class="node-content">
-                <div class="node-title font-mono">Paint</div>
-                <div class="node-detail">Rasterization</div>
-              </div>
-            </div>
-
-            <div class="pipeline-arrow" aria-hidden="true"></div>
-
-            <div class="pipeline-node screen" data-tooltip="Composite layers are drawn onto the screen, utilizing GPU hardware acceleration.">
-              <div class="node-icon font-mono">CP</div>
-              <div class="node-content">
-                <div class="node-title font-mono">Composite</div>
-                <div class="node-detail">Draw on screen</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-    </main>
-
-  </div>
-
-  <!-- JavaScript Application -->
-  <script src="app.js"></script>
-</body>
+    <!-- JavaScript Application -->
+    <script src="script.js"></script>
+  </body>
 </html>

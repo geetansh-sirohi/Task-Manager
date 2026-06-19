@@ -362,14 +362,13 @@
       consoleLogsContainer.innerHTML = '';
     }
 
-    const timestamp = new Date().toLocaleTimeString().split(' ')[0];
     const logLine = document.createElement('div');
     logLine.classList.add('console-line');
     
     let phaseColor = 'var(--color-link)';
     if (phaseName === 'Capturing') phaseColor = 'var(--color-warning-text)';
     
-    logLine.innerHTML = `<span style="color: var(--text-secondary)">[${timestamp}]</span> <span style="color: ${phaseColor}; font-weight: 600;">[${phaseName.toUpperCase()}]</span> Event reached: <strong style="color: var(--text-primary)">${elementName}</strong>`;
+    logLine.innerHTML = `<span style="color: ${phaseColor}; font-weight: 600;">[${phaseName.toUpperCase()}]</span> Event reached: <strong style="color: var(--text-primary)">${elementName}</strong>`;
     
     consoleLogsContainer.appendChild(logLine);
     consoleLogsContainer.scrollTop = consoleLogsContainer.scrollHeight;
