@@ -315,103 +315,105 @@
             </p>
           </div>
 
-          <div class="pipeline-flow">
-            <!-- Row 1: HTML Parser to DOM -->
-            <div class="pipeline-row">
-              <div
-                class="pipeline-node source"
-                data-tooltip="The source text document containing tags, text, and structure."
-              >
-                <div class="node-icon font-mono">&lt;/&gt;</div>
-                <div class="node-content">
-                  <div class="node-title font-mono">HTML Source</div>
-                  <div class="node-detail">Raw byte stream</div>
+            <!-- DOM & CSSOM Pipelines Group Container -->
+            <div class="pipeline-sources-container">
+              <!-- Row 1: HTML Parser to DOM -->
+              <div class="pipeline-row">
+                <div
+                  class="pipeline-node source"
+                  data-tooltip="The source text document containing tags, text, and structure."
+                >
+                  <div class="node-icon font-mono">&lt;/&gt;</div>
+                  <div class="node-content">
+                    <div class="node-title font-mono">HTML Source</div>
+                    <div class="node-detail">Raw byte stream</div>
+                  </div>
+                </div>
+
+                <div class="pipeline-arrow" aria-hidden="true"></div>
+
+                <div
+                  class="pipeline-node process"
+                  data-tooltip="Tokenization converts bytes of HTML into distinct tokens (start tags, end tags, attributes, text)."
+                >
+                  <div class="node-icon font-mono">T</div>
+                  <div class="node-content">
+                    <div class="node-title font-mono">Tokenization</div>
+                    <div class="node-detail">Lexical Analysis</div>
+                  </div>
+                </div>
+
+                <div class="pipeline-arrow" aria-hidden="true"></div>
+
+                <div
+                  class="pipeline-node process"
+                  data-tooltip="Parsing constructs nodes and nesting relationships from the parsed tokens."
+                >
+                  <div class="node-icon font-mono">P</div>
+                  <div class="node-content">
+                    <div class="node-title font-mono">HTML Parsing</div>
+                    <div class="node-detail">Grammar check & nest</div>
+                  </div>
+                </div>
+
+                <div class="pipeline-arrow" aria-hidden="true"></div>
+
+                <div
+                  class="pipeline-node result"
+                  data-tooltip="DOM (Document Object Model) Tree represents the document as nodes in memory."
+                >
+                  <div class="node-icon font-mono">D</div>
+                  <div class="node-content">
+                    <div class="node-title font-mono">DOM Tree</div>
+                    <div class="node-detail">Object representation</div>
+                  </div>
                 </div>
               </div>
 
-              <div class="pipeline-arrow" aria-hidden="true"></div>
-
-              <div
-                class="pipeline-node process"
-                data-tooltip="Tokenization converts bytes of HTML into distinct tokens (start tags, end tags, attributes, text)."
-              >
-                <div class="node-icon font-mono">T</div>
-                <div class="node-content">
-                  <div class="node-title font-mono">Tokenization</div>
-                  <div class="node-detail">Lexical Analysis</div>
-                </div>
+              <!-- Branching / Merging indicators -->
+              <div class="pipeline-divider">
+                <div class="divider-arrow-left"></div>
+                <div class="divider-plus font-mono">+</div>
+                <div class="divider-arrow-right"></div>
               </div>
 
-              <div class="pipeline-arrow" aria-hidden="true"></div>
-
-              <div
-                class="pipeline-node process"
-                data-tooltip="Parsing constructs nodes and nesting relationships from the parsed tokens."
-              >
-                <div class="node-icon font-mono">P</div>
-                <div class="node-content">
-                  <div class="node-title font-mono">HTML Parsing</div>
-                  <div class="node-detail">Grammar check & nest</div>
+              <!-- Row 2: CSS to CSSOM -->
+              <div class="pipeline-row">
+                <div
+                  class="pipeline-node source"
+                  data-tooltip="The CSS source stylesheet containing selectors and declaration blocks."
+                >
+                  <div class="node-icon font-mono">{}</div>
+                  <div class="node-content">
+                    <div class="node-title font-mono">CSS Source</div>
+                    <div class="node-detail">Stylesheets & inline styles</div>
+                  </div>
                 </div>
-              </div>
 
-              <div class="pipeline-arrow" aria-hidden="true"></div>
+                <div class="pipeline-arrow" aria-hidden="true"></div>
 
-              <div
-                class="pipeline-node result"
-                data-tooltip="DOM (Document Object Model) Tree represents the document as nodes in memory."
-              >
-                <div class="node-icon font-mono">D</div>
-                <div class="node-content">
-                  <div class="node-title font-mono">DOM Tree</div>
-                  <div class="node-detail">Object representation</div>
+                <div
+                  class="pipeline-node process"
+                  data-tooltip="Parser parses styling rules, computes cascades, and processes specificity."
+                >
+                  <div class="node-icon font-mono">C</div>
+                  <div class="node-content">
+                    <div class="node-title font-mono">CSS Parsing</div>
+                    <div class="node-detail">Cascade resolution</div>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            <!-- Branching / Merging indicators -->
-            <div class="pipeline-divider">
-              <div class="divider-arrow-left"></div>
-              <div class="divider-plus font-mono">+</div>
-              <div class="divider-arrow-right"></div>
-            </div>
+                <div class="pipeline-arrow" aria-hidden="true"></div>
 
-            <!-- Row 2: CSS to CSSOM -->
-            <div class="pipeline-row">
-              <div
-                class="pipeline-node source"
-                data-tooltip="The CSS source stylesheet containing selectors and declaration blocks."
-              >
-                <div class="node-icon font-mono">{}</div>
-                <div class="node-content">
-                  <div class="node-title font-mono">CSS Source</div>
-                  <div class="node-detail">Stylesheets & inline styles</div>
-                </div>
-              </div>
-
-              <div class="pipeline-arrow" aria-hidden="true"></div>
-
-              <div
-                class="pipeline-node process"
-                data-tooltip="Parser parses styling rules, computes cascades, and processes specificity."
-              >
-                <div class="node-icon font-mono">C</div>
-                <div class="node-content">
-                  <div class="node-title font-mono">CSS Parsing</div>
-                  <div class="node-detail">Cascade resolution</div>
-                </div>
-              </div>
-
-              <div class="pipeline-arrow" aria-hidden="true"></div>
-
-              <div
-                class="pipeline-node result"
-                data-tooltip="CSSOM (CSS Object Model) Tree represents computed styles for DOM nodes."
-              >
-                <div class="node-icon font-mono">S</div>
-                <div class="node-content">
-                  <div class="node-title font-mono">CSSOM Tree</div>
-                  <div class="node-detail">Style node attachment</div>
+                <div
+                  class="pipeline-node result"
+                  data-tooltip="CSSOM (CSS Object Model) Tree represents computed styles for DOM nodes."
+                >
+                  <div class="node-icon font-mono">S</div>
+                  <div class="node-content">
+                    <div class="node-title font-mono">CSSOM Tree</div>
+                    <div class="node-detail">Style node attachment</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -432,45 +434,6 @@
                 <div class="node-content">
                   <div class="node-title font-mono">Render Tree</div>
                   <div class="node-detail">DOM + CSSOM Merged</div>
-                </div>
-              </div>
-
-              <div class="pipeline-arrow" aria-hidden="true"></div>
-
-              <div
-                class="pipeline-node process"
-                data-tooltip="Layout calculates geometry, sizes, and precise coordinates for each node."
-              >
-                <div class="node-icon font-mono">L</div>
-                <div class="node-content">
-                  <div class="node-title font-mono">Layout</div>
-                  <div class="node-detail">Reflow & positions</div>
-                </div>
-              </div>
-
-              <div class="pipeline-arrow" aria-hidden="true"></div>
-
-              <div
-                class="pipeline-node process"
-                data-tooltip="Paint fills in visual pixels, colors, text, borders, and shadows."
-              >
-                <div class="node-icon font-mono">PT</div>
-                <div class="node-content">
-                  <div class="node-title font-mono">Paint</div>
-                  <div class="node-detail">Rasterization</div>
-                </div>
-              </div>
-
-              <div class="pipeline-arrow" aria-hidden="true"></div>
-
-              <div
-                class="pipeline-node screen"
-                data-tooltip="Composite layers are drawn onto the screen, utilizing GPU hardware acceleration."
-              >
-                <div class="node-icon font-mono">CP</div>
-                <div class="node-content">
-                  <div class="node-title font-mono">Composite</div>
-                  <div class="node-detail">Draw on screen</div>
                 </div>
               </div>
             </div>
