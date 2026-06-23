@@ -1,5 +1,34 @@
 
-  const themeToggleBtn = document.getElementById('theme-toggle-btn');
+  // ==========================================================================
+  // DOM Element Cache (using document.querySelector)
+  // ==========================================================================
+  const themeToggleBtn = document.querySelector('#theme-toggle-btn');
+
+  // Task Console
+  const form = document.querySelector('#task-form');
+  const taskList = document.querySelector('#task-list');
+  const emptyState = document.querySelector('#empty-state');
+  const pendingCounter = document.querySelector('#pending-counter');
+  const completedCounter = document.querySelector('#completed-counter');
+  const searchInput = document.querySelector('#task-search');
+  const categoryFilter = document.querySelector('#filter-category');
+  const clearAllBtn = document.querySelector('#clear-all-btn');
+  const addTaskBtn = document.querySelector('#add-task-btn');
+
+  // Event Propagation Playground
+  const propGrandparent = document.querySelector('#prop-grandparent');
+  const propParent = document.querySelector('#prop-parent');
+  const propChild = document.querySelector('#prop-child');
+  const consoleLogsContainer = document.querySelector('#console-logs');
+  const clearConsoleBtn = document.querySelector('#clear-console-btn');
+
+  // Attributes vs Properties Playground
+  const demoInput = document.querySelector('#demo-input');
+  const propLiveValue = document.querySelector('#prop-live-value');
+  const attrLiveValue = document.querySelector('#attr-live-value');
+  const btnSetProp = document.querySelector('#btn-set-prop');
+  const btnSetAttr = document.querySelector('#btn-set-attr');
+  const btnResetDemo = document.querySelector('#btn-reset-demo');
   
   // Set theme helper
   const setTheme = (theme) => {
@@ -29,15 +58,16 @@
   setTheme(savedTheme);
 
 
-  let tasks = [];
+  let tasksArr = [];
+  let updateIndex = null;
   
   // Load tasks (in-memory initialization only, localStorage is disabled)
   const loadTasksFromStorage = () => {
     // Default placeholder tasks
-    tasks = [
-      { id: '1', title: 'Click on DOM Playgrounds to learn about event phases', category: 'Study', status: 'pending', edited: false },
-      { id: '2', title: 'Implement Event Delegation on task actions', category: 'Work', status: 'completed', edited: false },
-      { id: '3', title: 'Compare input.value vs getAttribute("value")', category: 'Study', status: 'pending', edited: false }
+    tasksArr = [
+      { title: 'Click on DOM Playgrounds to learn about event phases', category: 'Study', status: 'pending' },
+      { title: 'Implement Event Delegation on task actions', category: 'Work', status: 'completed' },
+      { title: 'Compare input.value vs getAttribute("value")', category: 'Study', status: 'pending' }
     ];
   };
 
@@ -47,28 +77,16 @@
 
 
   // ==========================================================================
-  // 4. Task Console DOM Cache
+  // 4. Task Console Configuration
   // ==========================================================================
-  const taskForm = document.getElementById('task-form');
-  const taskTitleInput = document.getElementById('task-title');
-  const taskCategorySelect = document.getElementById('task-category');
-  const taskListContainer = document.getElementById('task-list');
-  const emptyState = document.getElementById('empty-state');
-  
-  const pendingCounter = document.getElementById('pending-counter');
-  const completedCounter = document.getElementById('completed-counter');
-  
-  const searchInput = document.getElementById('task-search');
-  const categoryFilter = document.getElementById('filter-category');
-  const clearAllBtn = document.getElementById('clear-all-btn');
 
 
   // ==========================================================================
   // 5. Tasks Helper Stats
   // ==========================================================================
   const updateCounters = () => {
-    const totalPending = tasks.filter(t => t.status === 'pending').length;
-    const totalCompleted = tasks.filter(t => t.status === 'completed').length;
+    const totalPending = tasksArr.filter(t => t.status === 'pending').length;
+    const totalCompleted = tasksArr.filter(t => t.status === 'completed').length;
     
     pendingCounter.textContent = totalPending.toString();
     completedCounter.textContent = totalCompleted.toString();
@@ -76,271 +94,124 @@
 
 
   // ==========================================================================
-  // 6. Task Rendering Engine (Using DocumentFragment & Pure DOM APIs)
+  // 6. Task Rendering Engine (ui() function using innerHTML & template literals)
   // ==========================================================================
-  
-  // Create single task card element dynamically
-  const createTaskCard = (task) => {
-    // createElement() demo
-    const card = document.createElement('div');
-    card.classList.add('task-card');
-    
-    // Custom data attribute demos (dataset + setAttribute)
-    card.setAttribute('data-id', task.id);
-    card.setAttribute('data-category', task.category);
-    card.dataset.status = task.status;
+  const ui = () => {
+    taskList.innerHTML = "";
 
-    // Info Side
-    const infoSide = document.createElement('div');
-    infoSide.classList.add('task-info-side');
-    
-    const badgeRow = document.createElement('div');
-    badgeRow.classList.add('task-badge-row');
-    
-    const categoryTag = document.createElement('span');
-    categoryTag.classList.add('category-tag');
-    categoryTag.textContent = task.category;
-    
-    // createTextNode() demo (protects against XSS)
-    const titleTextNode = document.createTextNode(task.title);
-    
-    const titleSpan = document.createElement('span');
-    titleSpan.classList.add('task-title-text');
-    titleSpan.appendChild(titleTextNode);
-    
-    badgeRow.appendChild(categoryTag);
-    infoSide.appendChild(badgeRow);
-    infoSide.appendChild(titleSpan);
-
-    // after() method demo: Appending Edited marker next to title span
-    if (task.edited) {
-      const editedLabel = document.createElement('span');
-      editedLabel.classList.add('edited-marker');
-      editedLabel.textContent = ' (Edited)';
-      titleSpan.after(editedLabel);
-    }
-    
-    // Actions Side
-    const actionsSide = document.createElement('div');
-    actionsSide.classList.add('task-actions-side');
-    
-    // Complete Action Button
-    const completeBtn = document.createElement('button');
-    completeBtn.classList.add('btn-action', 'btn-complete-action');
-    completeBtn.textContent = task.status === 'completed' ? 'Undo' : 'Done';
-    completeBtn.dataset.action = 'complete';
-    
-    // Edit Action Button
-    const editBtn = document.createElement('button');
-    editBtn.classList.add('btn-action', 'btn-edit-action');
-    editBtn.textContent = 'Edit';
-    editBtn.dataset.action = 'edit';
-    
-    // Delete Action Button
-    const deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('btn-action', 'btn-delete-action');
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.dataset.action = 'delete';
-    
-    // Append children elements to parent nodes
-    actionsSide.appendChild(completeBtn);
-    actionsSide.appendChild(editBtn);
-    actionsSide.appendChild(deleteBtn);
-    
-    card.appendChild(infoSide);
-    card.appendChild(actionsSide);
-    
-    return card;
-  };
-
-  // Render full list of active/filtered tasks
-  const renderTaskList = () => {
-    // Remove existing cards
-    const cards = taskListContainer.querySelectorAll('.task-card');
-    cards.forEach(card => card.remove()); // remove() API demo
-    
     const query = searchInput.value.toLowerCase().trim();
     const selectedCategory = categoryFilter.value;
-    
-    const filteredTasks = tasks.filter(task => {
+
+    const filteredTasks = tasksArr.filter(task => {
       const matchesSearch = task.title.toLowerCase().includes(query);
       const matchesCategory = selectedCategory === 'all' || task.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
 
     if (filteredTasks.length === 0) {
-      emptyState.style.display = 'flex';
+      taskList.innerHTML = `
+        <div class="empty-state" id="empty-state">
+          <h4 class="font-mono">NO ACTIVE ENTRIES</h4>
+          <p>Add a task description above to populate your workspace.</p>
+        </div>`;
       updateCounters();
       return;
     }
-    
-    emptyState.style.display = 'none';
 
-    // DocumentFragment API demo (reduces browser rendering paint repaints)
-    const fragment = document.createDocumentFragment();
-    
-    filteredTasks.forEach(task => {
-      const card = createTaskCard(task);
-      fragment.appendChild(card);
+    filteredTasks.forEach((elem) => {
+      const index = tasksArr.indexOf(elem);
+
+      taskList.innerHTML += `
+        <div class="task-card" data-id="${index}" data-category="${elem.category}" data-status="${elem.status}">
+          <div class="task-info-side">
+            <div class="task-badge-row">
+              <span class="category-tag">${elem.category}</span>
+            </div>
+            <span class="task-title-text">${elem.title}</span>
+          </div>
+          <div class="task-actions-side">
+            <button class="btn-action btn-complete-action" onclick="toggleComplete(${index})">
+              ${elem.status === 'completed' ? 'Undo' : 'Done'}
+            </button>
+            <button class="btn-action btn-edit-action" onclick="updateTask('${elem.title}')">Edit</button>
+            <button class="btn-action btn-delete-action" onclick="deleteTask(${index})">Delete</button>
+          </div>
+        </div>
+      `;
     });
-    
-    // append() API demo (attaches the entire fragment subtree to container)
-    taskListContainer.appendChild(fragment);
+
     updateCounters();
   };
 
 
   // ==========================================================================
-  // 7. Event Handling & Delegation (Task Console Form & Card Actions)
+  // 7. Exposing Global Event Handlers for Task Actions (similar to updateProduct & deleteProduct)
   // ==========================================================================
+  const toggleComplete = (index) => {
+    tasksArr[index].status = tasksArr[index].status === 'completed' ? 'pending' : 'completed';
+    ui();
+  };
 
-  // Submit form listener to add task
-  taskForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const title = taskTitleInput.value.trim();
-    const category = taskCategorySelect.value;
-    
-    if (!title) return;
-    
-    const newTask = {
-      id: Date.now().toString(),
-      title: title,
-      category: category,
-      status: 'pending',
-      edited: false
+  const updateTask = (title) => {
+    let task = tasksArr.find((elem) => elem.title === title);
+    updateIndex = tasksArr.findIndex((elem) => elem.title === title);
+
+    form[0].value = task.title;
+    form[1].value = task.category;
+
+    addTaskBtn.textContent = "Save Entry";
+  };
+
+  const deleteTask = (index) => {
+    tasksArr.splice(index, 1);
+    ui();
+  };
+
+  // Exposing to global window object to ensure access by inline onclick attributes
+  window.toggleComplete = toggleComplete;
+  window.updateTask = updateTask;
+  window.deleteTask = deleteTask;
+
+
+  // ==========================================================================
+  // 8. Event Handling (Task Console Form & Search/Filter)
+  // ==========================================================================
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    let title = event.target[0].value.trim();
+    let category = event.target[1].value;
+
+    if (title === "" || category === "") {
+      alert("please fill all the Details");
+      return;
+    }
+
+    let taskObj = {
+      title,
+      category,
+      status: updateIndex !== null ? tasksArr[updateIndex].status : 'pending'
     };
-    
-    tasks.push(newTask);
-    saveTasksToStorage();
-    
-    taskForm.reset();
-    
-    const card = createTaskCard(newTask);
-    
-    if (emptyState.style.display !== 'none') {
-      emptyState.style.display = 'none';
+
+    if (updateIndex !== null) {
+      tasksArr[updateIndex] = taskObj;
+      updateIndex = null;
+      addTaskBtn.textContent = "Create Entry";
+    } else {
+      tasksArr.push(taskObj);
     }
-    
-    // prepend() API demo (inserts the new card at the top)
-    taskListContainer.prepend(card);
-    updateCounters();
+
+    ui();
+    form.reset();
   });
 
-  // Event Delegation demo: Handle click actions inside task list container
-  taskListContainer.addEventListener('click', (e) => {
-    const actionBtn = e.target.closest('button');
-    if (!actionBtn) return;
-    
-    const action = actionBtn.dataset.action;
-    const card = actionBtn.closest('.task-card');
-    if (!card) return;
-    
-    const taskId = card.getAttribute('data-id');
-    const taskIndex = tasks.findIndex(t => t.id === taskId);
-    
-    if (taskIndex === -1) return;
-    const task = tasks[taskIndex];
-    
-    if (action === 'complete') {
-      const isCompleted = task.status === 'completed';
-      task.status = isCompleted ? 'pending' : 'completed';
-      saveTasksToStorage();
-      
-      // hasAttribute() & removeAttribute() demos
-      if (card.hasAttribute('data-status')) {
-        card.removeAttribute('data-status');
-      }
-      
-      card.dataset.status = task.status;
-      card.setAttribute('data-status', task.status);
-      actionBtn.textContent = task.status === 'completed' ? 'Undo' : 'Done';
-      
-      if (task.status === 'completed') {
-        // append() demo: move completed item to the bottom
-        taskListContainer.append(card);
-      } else {
-        // prepend() demo: move active item to the top
-        taskListContainer.prepend(card);
-      }
-      updateCounters();
-      
-    } else if (action === 'edit') {
-      // Inline edit form creation
-      const editForm = document.createElement('form');
-      editForm.classList.add('task-card-edit-form');
-      
-      const editInput = document.createElement('input');
-      editInput.type = 'text';
-      editInput.value = task.title;
-      editInput.required = true;
-      editInput.classList.add('edit-title-input');
-      
-      const saveBtn = document.createElement('button');
-      saveBtn.type = 'submit';
-      saveBtn.classList.add('btn', 'btn-primary');
-      saveBtn.textContent = 'Save';
-      
-      const cancelBtn = document.createElement('button');
-      cancelBtn.type = 'button';
-      cancelBtn.classList.add('btn', 'btn-secondary');
-      cancelBtn.textContent = 'Cancel';
-      
-      editForm.appendChild(editInput);
-      editInput.after(saveBtn); // after() demo
-      saveBtn.after(cancelBtn);
-      
-      // before() demo: prepend label helper
-      const editLabel = document.createElement('label');
-      editLabel.textContent = 'EDITING TASK:';
-      editInput.before(editLabel);
-      
-      // replaceWith() demo: swaps task card with form
-      card.replaceWith(editForm);
-      editInput.focus();
-      
-      editForm.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-        const updatedTitle = editInput.value.trim();
-        if (updatedTitle) {
-          task.title = updatedTitle;
-          task.edited = true;
-          saveTasksToStorage();
-          
-          const newCard = createTaskCard(task);
-          editForm.replaceWith(newCard); // swap back
-          updateCounters();
-        }
-      });
-      
-      cancelBtn.addEventListener('click', () => {
-        editForm.replaceWith(card);
-      });
-      
-    } else if (action === 'delete') {
-      tasks.splice(taskIndex, 1);
-      saveTasksToStorage();
-      
-      // remove() demo: delete element completely
-      card.remove();
-      
-      if (taskListContainer.querySelectorAll('.task-card').length === 0) {
-        emptyState.style.display = 'flex';
-      }
-      updateCounters();
-    }
-  });
+  searchInput.addEventListener('input', ui);
+  categoryFilter.addEventListener('change', ui);
 
-  // Search & filter action event triggers
-  searchInput.addEventListener('input', renderTaskList);
-  categoryFilter.addEventListener('change', renderTaskList);
-  
-  // Clear all button handler
   clearAllBtn.addEventListener('click', () => {
     if (confirm('Are you sure you want to delete all tasks?')) {
-      tasks = [];
-      saveTasksToStorage();
-      renderTaskList();
+      tasksArr = [];
+      ui();
     }
   });
 
@@ -348,11 +219,6 @@
   // ==========================================================================
   // 8. DOM Playgrounds: Event Propagation Demo
   // ==========================================================================
-  const propGrandparent = document.getElementById('prop-grandparent');
-  const propParent = document.getElementById('prop-parent');
-  const propChild = document.getElementById('prop-child');
-  const consoleLogsContainer = document.getElementById('console-logs');
-  const clearConsoleBtn = document.getElementById('clear-console-btn');
 
   // simulated console logger helper
   const addConsoleLog = (elementName, phaseName) => {
@@ -458,13 +324,6 @@
   // 9. DOM Playgrounds: Attributes vs. Properties Live Demonstration
   //    Satisfies Requirements: getAttribute(), setAttribute(), dataset, hasAttribute(), removeAttribute()
   // ==========================================================================
-  const demoInput = document.getElementById('demo-input');
-  const propLiveValue = document.getElementById('prop-live-value');
-  const attrLiveValue = document.getElementById('attr-live-value');
-  
-  const btnSetProp = document.getElementById('btn-set-prop');
-  const btnSetAttr = document.getElementById('btn-set-attr');
-  const btnResetDemo = document.getElementById('btn-reset-demo');
 
   /**
    * Explain the difference in comments (Requirement Demonstration):
@@ -526,6 +385,6 @@
   // 10. Initial Run task list loader
   // ==========================================================================
   loadTasksFromStorage();
-  renderTaskList();
+  ui();
   
   console.log("DOM Explorer App loaded successfully.");
